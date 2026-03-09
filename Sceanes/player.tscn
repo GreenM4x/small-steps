@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://mb2fjymcok0c"]
+
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://Assets/sophia_skin/sophia_skin.tscn" id="1_wnxct"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wnxct"]
+
+[node name="Player" type="CharacterBody3D" unique_id=898099934]
+
+[node name="SophiaSkin" parent="." unique_id=1739709418 instance=ExtResource("1_wnxct")]
+script = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1212913280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_wnxct")
