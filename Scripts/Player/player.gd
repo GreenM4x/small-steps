@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export_group("Camera")
 @export_range(0.0,1.0) var mouse_sensitivity := 0.25
+@export_range(0.0,5.0) var controller_sensitivity := 3.0
 
 @export_group("Movement")
 @export var move_speed := 8.0
@@ -28,11 +29,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		_camera_input_direction = event.screen_relative * mouse_sensitivity
 
 func _physics_process(delta: float) -> void:
-	#Camera Movement
-	_camera_pivot.rotation.x += _camera_input_direction.y * delta
+	# Controller camera input
+	var controller_look := Input.get_vector("look_left", "look_right", "look_up", "look_down")
+
+	# Combine mouse + controller
+	var look_input := _camera_input_direction + controller_look * controller_sensitivity
+
+	# Camera Movement
+	_camera_pivot.rotation.x += look_input.y * delta
 	_camera_pivot.rotation.x = clamp(_camera_pivot.rotation.x, -PI / 6.0, PI / 3.0)
-	_camera_pivot.rotation.y -= _camera_input_direction.x * delta
-	
+	_camera_pivot.rotation.y -= look_input.x * delta
+
 	_camera_input_direction = Vector2.ZERO
 	
 	#Player Movement
